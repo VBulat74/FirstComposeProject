@@ -3,9 +3,9 @@ package ru.com.vbulat.firstcomposeproject
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
@@ -18,21 +18,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
 fun UserInfo(name: String, age:String){
-    Text(text = "Hello $name! You are $age years old!")
+    Column {
+        for (i in 0..10)
+            Text(text = "Hello $name! You are $age years old!")
+    }
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+)
 @Composable
-fun GreetingPreview() {
+fun UserInfoPreview() {
     UserInfo(name = "Jon", age = "25")
 }
 
