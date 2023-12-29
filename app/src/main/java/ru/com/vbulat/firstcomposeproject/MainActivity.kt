@@ -7,8 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import ru.com.vbulat.firstcomposeproject.ui.theme.FirstComposeProjectTheme
@@ -32,10 +34,18 @@ fun Test(viewModel: MainViewModel){
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background),
         ) {
+            val models = viewModel.models.observeAsState(listOf())
             LazyColumn(
             ) {
-                items(500) {
-                    InstagramProfileCard(viewModel = viewModel)
+                items(
+                    models.value,
+                    ){model->
+                    InstagramProfileCard(
+                        model = model,
+                        onFollowedButtonClickListener = {
+                            viewModel.changeFollowingStatus(it)
+                        }
+                    )
                 }
             }
         }
